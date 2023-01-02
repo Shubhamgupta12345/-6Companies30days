@@ -1,0 +1,55 @@
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+        int a=0,b=0;
+        map<char,int>mp1,mp2;
+        for(int i=0;i<secret.size();i++)
+        {
+            if(secret[i]==guess[i])
+            {
+                a++;
+            }
+            else
+            {
+                mp1[secret[i]]++;
+                mp2[guess[i]]++;
+            }
+        }
+        for(auto x:mp1)
+        {
+            if(mp2[x.first]>0)
+            {
+                b+=min(x.second,mp2[x.first]);
+            }
+        }
+        
+        string s1,s2;
+        if(a==0)
+        {
+            s1+=0+'0';
+        }
+        while(a!=0)
+        {
+            s1+=(a%10)+'0';
+            a=a/10;
+        }
+        reverse(s1.begin(),s1.end());
+        s1+='A';
+        if(b==0)
+        {
+            s2+=0+'0';
+        }
+          while(b!=0)
+        {
+            s2+=(b%10)+'0';
+            b=b/10;
+        }
+         reverse(s2.begin(),s2.end());
+        s2+='B';
+        
+        s1+=s2;
+
+        return s1;
+
+    }
+};
