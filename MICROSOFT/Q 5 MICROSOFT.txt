@@ -1,0 +1,39 @@
+class Solution {
+public:
+    vector<int> largestDivisibleSubset(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        int n=nums.size();
+        vector<int>div(n,1);
+        vector<int>prev(n,-1);
+        int max=0;
+        for(int i=1;i<n;i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(nums[i]%nums[j]==0)
+                {
+                    if(div[i]<div[j]+1)
+                    {
+
+                        div[i]=div[j]+1;
+                        prev[i]=j;
+                    }
+                        
+                }
+
+            }
+            if(div[max]<div[i])
+            {
+                max=i;
+            }
+        }
+        vector<int>v;
+        int k=max;
+        while(k>=0)
+        {
+            v.push_back(nums[k]);
+            k=prev[k];
+        }
+        return v;
+    }
+};
