@@ -1,0 +1,98 @@
+class Solution {
+private:
+    vector<vector<int>> Adj;
+    vector<int> visited;
+    vector<int> Vpath_B;
+    //DFS for Bob
+    int find_path_B(int n){
+        if(n == 0){Vpath_B.push_back(n); return 1;}
+        
+        if(visited[n] == 1){return 0;}
+        visited[n] = 1;
+        
+        for(auto &v: Adj[n]){
+            int flag = find_path_B(v);
+            if(flag != 1){continue;}
+            
+            Vpath_B.push_back(n);
+            return 1;
+        }
+        
+        return 0;
+    }
+public:
+    int mostProfitablePath(vector<vector<int>>& edges, int bob, vector<int>& amount) {
+        
+        int len_n = amount.size();
+        Adj.resize(len_n, vector<int>());
+        for(auto &E:edges){
+            int u = E[0], v = E[1];
+            Adj[u].push_back(v);
+            Adj[v].push_back(u);
+        }
+        
+        //DFS of bob
+        visited.resize(len_n, 0);
+        find_path_B(bob);
+ 
+// vector<int> Vp2 = Vpath_B;
+// for(int i = 0; i < Vp2.size(); i++){
+//     cout << Vp2[i] << " ";
+// }
+// cout << endl << endl;
+        
+        amount[bob] = 0;
+        Vpath_B.pop_back();
+        
+        
+        using pii = pair<int,int>;
+        int val = amount[0];
+        queue<pii> Q({{0,val}});
+        int Max = INT_MIN;
+        
+        vector<int> visited2(len_n, 0);
+        visited2[0] = 1;
+        //BFS for Alice, while maintaing Bob location on its path
+        while(!Q.empty()){
+            int len_Q = Q.size();
+			
+			//maintaing Bob's position
+            int n_bob = -1;
+            if(!Vpath_B.empty()){
+                n_bob = Vpath_B.back();
+                Vpath_B.pop_back();
+            }
+
+			//Alice's next move
+            while(len_Q--){
+                int u = Q.front().first;
+                int val = Q.front().second;
+                Q.pop();
+                
+         
+                if(Adj[u].size() == 1 && u != 0){ //leaf
+                    Max = max(Max, val);
+                    continue;
+                }
+                
+                for(int &v: Adj[u]){
+                    if(visited2[v] == 1){continue;}
+                    visited2[v] = 1; 
+                    
+                    if(v != n_bob){
+                        Q.push({v, val+ amount[v]});
+                        continue;
+                    }
+                    
+                    Q.push({v, val+amount[v]/2});
+                }
+            }
+            
+			//rewards and costs taken away by Bob
+            if(n_bob != -1){amount[n_bob] = 0;}
+        }
+        
+        return Max;
+        
+    }
+};
