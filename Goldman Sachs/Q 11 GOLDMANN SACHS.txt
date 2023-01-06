@@ -1,0 +1,86 @@
+#include<bits/stdc++.h>
+class Solution {
+public:
+    vector<string> invalidTransactions(vector<string>& transactions) {
+        vector<int>v1,v2;
+        vector<string>v3,v4;
+        for(int i=0;i<transactions.size();i++)
+        {
+            string s=transactions[i];
+            string k ="";
+            int flag=0;
+            for(int i=0;i<s.size();i++)
+            {
+       
+               if(s[i]==','&&flag==0)
+               {
+                   v3.push_back(k);
+                   flag=1;
+                   k="";
+               }
+               else if(flag==1&&s[i]==',')
+               {
+                     string m=k;
+  
+    
+    stringstream geek(m);
+  
+    int x = 0;
+    geek >> x;
+                   v1.push_back(x);
+                   flag=2;
+                   k="";
+               }
+               else if(flag==2&&s[i]==',')
+               {
+                   string m=k;
+  
+    
+    stringstream geek(m);
+  
+    int x = 0;
+    geek >> x;
+                   v2.push_back(x);
+                   flag=3;
+                   k="";
+               }
+               else if(flag==3&&i==s.size()-1)
+               {
+                   v4.push_back(k);
+                   k="";
+               }
+               else
+               {
+                   k+=s[i];
+               }
+            }
+        }
+        vector<string>ans;
+        for(int i=0;i<v2.size();i++)
+        {
+            if(v2[i]>1000)
+            {
+                ans.push_back(transactions[i]);
+            }
+        }
+                for(int i=0;i<transactions.size();i++){
+            for(int j=0;j<transactions.size();j++){
+                if(v3[i]==v3[j] ){
+                    if(v4[i]!=v4[j])
+                    {
+                    if(abs(v1[i]-v1[j])<=60){
+                        if(v2[i]<=1000){
+                            ans.push_back(transactions[i]);
+                            break;
+                        }
+                    }
+                    }
+                }
+            }
+        }
+        vector<string>m;
+
+return ans;
+
+    }
+};
