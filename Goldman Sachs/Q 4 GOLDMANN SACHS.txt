@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int numberOfBoomerangs(vector<vector<int>>& points) {
+        int ans=0;
+        for(int i=0;i<points.size();i++)
+        {
+            int x1=points[i][0],y1=points[i][1];
+            map<int,int>mp;
+            for(int j=0;j<points.size();j++)
+            {
+                int x2=points[j][0],y2=points[j][1];
+                if(i!=j)
+                {
+                   int k=((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1));
+                   mp[k]++;
+                }
+            }
+            for(auto x:mp)
+            {
+                if(x.second>1)
+                {
+                    ans+=(x.second)*(x.second-1);
+                }
+            }
+
+        }
+        return ans;
+    }
+};
