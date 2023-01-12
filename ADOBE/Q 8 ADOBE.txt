@@ -1,0 +1,58 @@
+class Solution {
+public:
+    int minMutation(string startGene, string endGene, vector<string>& bank) {
+     unordered_set<string>s;
+        for(int i=0;i<bank.size();i++)
+        {
+            s.insert(bank[i]);
+        }
+        vector<string>v;
+        vector<char>avail{'A','C','G','T'};
+        int ans=0;
+        queue<string>q;
+        set<string>vis;
+        if(startGene==endGene)
+        {
+            return 0;
+        }
+        if(s.find(endGene)==s.end())
+        {
+            return -1;
+        }
+        q.push(startGene);
+        vis.insert(startGene);
+        while(!q.empty())
+        {
+            int sz=q.size();
+            for(int i=0;i<sz;i++)
+            {
+                auto curr=q.front();
+                q.pop();
+                if(curr==endGene)
+                {
+                    return ans;
+                }
+                for(int j=0;j<curr.size();j++)
+                {
+                    char orig=curr[j];
+                    for(int k=0;k<4;k++)
+                    {
+                        curr[j]=avail[k];
+                        if(s.find(curr)!=s.end())
+                        {
+                            if(vis.find(curr)==vis.end())
+                            {
+                                q.push(curr);
+                                vis.insert(curr);
+                            }
+                        }
+                    }
+                    curr[j]=orig;
+                }
+            }
+            ans++;
+        }
+        return -1;
+        
+    }
+};
