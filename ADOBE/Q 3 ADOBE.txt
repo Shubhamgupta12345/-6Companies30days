@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int findKthNumber(int n, int k) {
+     vector<string>v;
+        for(int i=1;i<=n;i++)
+        {
+            v.push_back(to_string(i));
+        }
+        sort(v.begin(),v.end());
+        int ans;
+        for(int i=0;i<k;i++)
+        {
+            ans=stoi(v[i]);
+        }
+        return ans;
+    }
+};
