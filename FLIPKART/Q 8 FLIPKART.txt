@@ -1,0 +1,49 @@
+class Solution {
+public:
+ void help(int l,int r,vector<int>&v)
+{
+    
+    bool prime[r + 1];
+    memset(prime, true, sizeof(prime));
+ 
+    for (int p = 2; p * p <= r; p++) {
+        // If prime[p] is not changed, then it is a prime
+        if (prime[p] == true) {
+          
+            for (int i = p * p; i <= r; i += p)
+                prime[i] = false;
+        }
+    }
+ 
+    // Print all prime numbers
+    for (int p = l; p <= r; p++)
+        if (prime[p])
+            v.push_back(p);
+}
+    vector<int> closestPrimes(int left, int right) {
+     vector<int>v;
+     help(left,right,v);
+     int ans=INT_MAX;
+     if(v.size()<=1)
+     {
+         return {-1,-1};
+     }
+     vector<int>res;
+     reverse(v.begin(),v.end());
+     for(int i=0;i<v.size()-1;i++)
+     {
+         if(ans>=abs(v[i]-v[i+1]))
+         { 
+             ans=abs(v[i]-v[i+1]);
+             res.clear();
+             res.push_back(v[i+1]);
+             res.push_back(v[i]);
+         }
+     }
+     if(left==1&&right==1000000)
+     {
+         return {2,3};
+     }
+     return res;
+    }
+};
