@@ -1,0 +1,44 @@
+class Solution {
+public:
+    vector<int> rearrangeBarcodes(vector<int>& barcodes) {
+        if(barcodes.size()<=1)
+        {
+            return barcodes;
+        }
+        map<int,int>mp;
+        for(int i=0;i<barcodes.size();i++)
+        {
+            mp[barcodes[i]]++;
+
+        }
+        priority_queue<pair<int,int>>pq;
+        for(auto &x:mp)
+        {
+            pq.push({x.second,x.first});
+        }
+        vector<int>v;
+        while(pq.top().first>0)
+
+       
+        {
+            pair<int,int>p1=pq.top();
+            pq.pop();
+        
+           v.push_back(p1.second);
+            
+            p1.first--;
+            pair<int,int>p2=pq.top();
+            pq.pop();
+            if(p2.first>0)
+            {
+                v.push_back(p2.second);
+                p2.first--;
+            }
+            
+            pq.push(p1);
+            pq.push(p2);
+
+        }
+        return v;
+    }
+};
