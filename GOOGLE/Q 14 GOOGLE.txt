@@ -1,0 +1,7 @@
+class Solution {
+public:
+    bool isStrictlyPalindromic(int n) {
+        //as the number in base n-2 in every case is non palindromic.
+        return 0;
+    }
+};
