@@ -1,0 +1,53 @@
+class Solution {
+public:
+
+
+ bool check(string &s){
+        int j=s.size()/2;
+        
+        for(int i=0;i<(s.size()/2);i++){
+            if(s[i]!=s[j])return false;
+            j++;
+        }
+        return true;
+    }
+    int distinctEchoSubstrings(string text) {
+          
+         unordered_set<string>v;
+          int ans=0;
+        //   for(int i=0;i<v.size();i++)
+        //   {
+             
+             
+              
+        //       if(check(v[i])==true)
+        //       {
+        //           ans++;
+              
+        //       }
+        //   }
+        string s=text;
+         for(int i=0;i<s.size();i++)
+         {
+             string str="";
+             for(int j=i;j<s.size();j+=2)
+             {
+                 str+=s[j];
+                 if(j+1<s.size())
+                 {
+                     str+=s[j+1];
+                      
+                 }
+                 else
+                 {
+                     break;
+                 }
+                if(check(str))
+                {
+                    v.insert(str);
+                }
+             }
+         }
+          return v.size();      
+    }
+};
