@@ -1,0 +1,67 @@
+class Solution {
+public:
+    void merge(vector<int>&nums,int left ,int mid ,int right)
+    {
+           if(left>=right)
+           {
+               return;
+           }
+            int size1=mid-left+1;
+            int size2=right-mid;
+            vector<int>arr1,arr2;
+            for(int i=0;i<size1;i++)
+            {
+                arr1.push_back(nums[i+left]);
+            }
+            for(int i=0;i<size2;i++)
+            {
+                arr2.push_back(nums[i+mid+1]);
+            }
+            int indexarr1=0,indexarr2=0,index=left;
+            while(indexarr1<size1&&indexarr2<size2)
+            {
+                if(arr1[indexarr1]<=arr2[indexarr2])
+                {
+                    nums[index]=arr1[indexarr1];
+                    indexarr1++;
+                }
+                else
+                {
+                  nums[index]=arr2[indexarr2];
+                    indexarr2++;   
+                }
+                index++;
+            }
+
+            while(indexarr1<size1)
+            {
+                nums[index]=arr1[indexarr1];
+                indexarr1++;
+                index++;
+            }
+              while(indexarr2<size2)
+            {
+                nums[index]=arr2[indexarr2];
+                indexarr2++;
+                index++;
+            }
+     
+    
+
+    }
+    void mergesort(vector<int>&nums,int start,int end)
+    {
+        if(start>=end)
+        {
+            return;
+        }
+        int mid=start+(end-start)/2;
+        mergesort(nums,start,mid);
+        mergesort(nums,mid+1,end);
+        merge(nums,start,mid,end);
+    }
+    vector<int> sortArray(vector<int>& nums) {
+          mergesort(nums,0,nums.size()-1);
+          return nums;      
+    }
+};
