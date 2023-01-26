@@ -1,0 +1,63 @@
+typedef pair<int,pair<int,int>> pi;
+
+class Solution {
+public:
+    int swimInWater(vector<vector<int>>& grid) {
+        priority_queue<pi,vector<pi>,greater<pi>>pq;
+      
+        int n=grid.size(),m=grid[0].size();
+           
+
+      
+        int ans= max(grid[0][0],grid[n-1][m-1]);;
+        vector<vector<bool>>vis;
+        // for(int i=0;i<n;i++)
+        // {
+        //     for(int j=0;j<m;j++)
+        //     {
+        //         vis[i][j]=false;
+        //     }
+        // }
+         for(int i =0; i<n; i++){
+            vector<bool>temp(m,false);
+            vis.push_back(temp);
+        }
+        vis[0][0]=true;
+         pq.push({grid[0][0],{0,0}});
+        while(pq.empty()==false)
+        {
+            int node=pq.top().first;
+            int row=pq.top().second.first;
+            int col=pq.top().second.second;
+            pq.pop();
+            ans=max(ans,node);
+            if(row==n-1&&col==m-1)
+            {
+                return ans;
+            }
+            if(row+1<n&&vis[row+1][col]==false)
+            {
+                pq.push({max(node,grid[row+1][col]),{row+1,col}});
+                vis[row+1][col]=true;
+            }
+             if(row-1>=0&&vis[row-1][col]==false)
+            {
+                pq.push({max(node,grid[row-1][col]),{row-1,col}});
+                vis[row-1][col]=true;
+            } 
+            if(col+1<m&&vis[row][col+1]==false)
+            {
+                pq.push({max(node,grid[row][col+1]),{row,col+1}});
+                vis[row][col+1]=true;
+            } 
+            if(col-1>=0&&vis[row][col-1]==false)
+            {
+                pq.push({max(node,grid[row][col-1]),{row,col-1}});
+                vis[row][col-1]=true;
+            }
+            
+
+        }
+      return ans;
+    }
+};
