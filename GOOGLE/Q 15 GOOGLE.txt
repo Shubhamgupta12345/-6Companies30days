@@ -1,0 +1,47 @@
+class Solution {
+public:
+ set<vector<vector<int>>>s;
+	    void per( vector<vector<int>> mentors,int l,int r)
+	    {
+	        if(l==r)
+	        {
+	            s.insert(mentors);
+	        }
+	        else
+	        {
+	            for(int i=l;i<=r;i++)
+	            {
+	            swap(mentors[l],mentors[i]);
+	            per(mentors,l+1,r);
+	            swap(mentors[l],mentors[i]);
+	            }
+	        }
+	        
+	    }
+    int maxCompatibilitySum(vector<vector<int>>& students, vector<vector<int>>& mentors) {
+        per(mentors,0,mentors.size()-1);
+        vector<vector<vector<int>>>v(s.begin(),s.end());
+        int ans=0;
+        for(int i=0;i<v.size();i++)
+        {
+            int sol=0;
+            vector<vector<int>>v1=v[i];
+            
+              for(int j=0;j<students.size();j++)
+              {    int res=0;
+                    vector<int>stu=students[j];
+                    vector<int>men=v1[j];
+                 for(int k=0;k<stu.size();k++)
+                 {
+                     if(stu[k]==men[k])
+                     {
+                         res++;
+                     }
+                 }
+                    sol+=res;
+              }
+              ans=max(ans,sol);
+        }
+        return ans;
+    }
+};
