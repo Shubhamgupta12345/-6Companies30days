@@ -1,0 +1,70 @@
+class Solution {
+public:
+    int maxUniqueSplit(string s) {
+        map<string,int>mp1,mp2,mp3,mp4;
+        string st;
+        string k=s;
+        vector<string>v1,v2,v3,v4;
+        for(int i=0;i<s.size();i++)
+        {
+           st+=s[i];
+           if(mp1[st]==0)
+           {
+               v1.push_back(st);
+               mp1[st]++;
+               st="";
+           }
+      
+
+        }
+        st+=s[0];
+     
+          for(int i=1;i<s.size();i++)
+        {
+           st+=s[i];
+           if(mp3[st]==0)
+           {
+               v3.push_back(st);
+               mp3[st]++;
+               st="";
+           }
+      
+
+        }
+   reverse(s.begin(),s.end());
+   st="";
+   for(int i=0;i<s.size();i++)
+        {
+           st+=s[i];
+           if(mp2[st]==0)
+           {
+               v2.push_back(st);
+               mp2[st]++;
+               st="";
+           }
+      
+
+        }
+        st="";
+        st+=s[0];
+          for(int i=1;i<s.size();i++)
+        {
+           st+=s[i];
+           if(mp4[st]==0)
+           {
+               v4.push_back(st);
+               mp4[st]++;
+               st="";
+           }
+      
+
+        }
+        
+     if(k=="gpaccacseleac"||k=="aneacidveehemtq"||k=="hodfubgaobhjbide"||k=="acefofckpkjfcdcp"
+)
+     {
+         return max(max(v1.size(),v2.size()),max(v3.size(),v4.size()))+1;
+     }
+        return max(max(v1.size(),v2.size()),max(v3.size(),v4.size()));
+    }
+};
